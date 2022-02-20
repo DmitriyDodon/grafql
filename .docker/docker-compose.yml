@@ -1,0 +1,48 @@
+version: '3'
+services:
+  php-fpm:
+    build:
+      context: php-fpm
+    volumes:
+      - ../:/app
+    environment:
+      XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    networks:
+      - internal
+  nginx:
+    build:
+      context: nginx
+    volumes:
+      - ../:/app
+    ports:
+      - "9090:80"
+    depends_on:
+      - php-fpm
+    networks:
+      - internal
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '5555:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - internal
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.220.0/28
+volumes:
+  my-db:

@@ -1,0 +1,22 @@
+{
+  "name": "vendor_name/e.katalog",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "dmitriy",
+      "email": "dumassick@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-json": "*",
+    "ext-mysqli": "*",
+    "webonyx/graphql-php": "^14.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}
